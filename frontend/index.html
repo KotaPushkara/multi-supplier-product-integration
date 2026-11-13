@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Supplier Data Pipeline</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>Multi-Supplier Data Pipeline</h1>
+                <p>Product Integration & Data Engineering Dashboard</p>
+            </div>
+            <div class="status">
+                <span class="status-dot"></span>
+                Backend Dashboard
+            </div>
+        </header>
+
+        <section class="actions">
+            <div>
+                <h2>Pipeline Overview</h2>
+                <p>Monitor supplier data integration and publishing.</p>
+            </div>
+            <button id="runBtn">Run Pipeline</button>
+        </section>
+
+        <p id="message"></p>
+
+        <section class="metrics">
+            <div class="metric-card">
+                <p>Total Products</p>
+                <h2 id="products">-</h2>
+            </div>
+            <div class="metric-card">
+                <p>Supplier Records</p>
+                <h2 id="sources">-</h2>
+            </div>
+            <div class="metric-card">
+                <p>Attribute Provenance</p>
+                <h2 id="provenance">-</h2>
+            </div>
+            <div class="metric-card">
+                <p>Rejected Records</p>
+                <h2 id="rejected">-</h2>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Latest Pipeline Runs</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Run ID</th>
+                            <th>Status</th>
+                            <th>Input</th>
+                            <th>Accepted</th>
+                            <th>Rejected</th>
+                            <th>Duplicates</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody id="runsTable">
+                        <tr><td colspan="7">Loading pipeline runs...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Published Products</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>GTIN</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTable">
+                        <tr><td colspan="6">Loading products...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+                <section class="panel">
+            <h2>Rejected Records</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Reject ID</th>
+                            <th>Run ID</th>
+                            <th>Supplier</th>
+                            <th>Source Data</th>
+                            <th>Rejection Reason</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rejectedTable">
+                        <tr>
+                            <td colspan="6">Loading rejected records...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            Multi-Supplier Product Integration System | Python • FastAPI • MySQL
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
