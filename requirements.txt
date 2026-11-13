@@ -1,6 +1,5 @@
 fastapi
 uvicorn[standard]
-pandas
 mysql-connector-python
 python-dotenv
 pytest
