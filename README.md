@@ -2,54 +2,53 @@
 
 ## About the Project
 
-This project brings product data from multiple suppliers into one common format.
+This project combines product data from multiple suppliers into one common format.
 
-Each supplier provides product information in a different structure and may use different names for the same attributes. This makes it difficult to combine and maintain product data.
+Each supplier provides product information in a different structure and uses different names for similar attributes. This makes it difficult to manage and compare product information.
 
-To solve this, I built a pipeline that reads supplier feeds, validates records, standardizes product information, handles conflicting values, and stores the final products in a MySQL database.
+To solve this problem, I developed a pipeline that reads supplier feeds, validates records, standardizes product details, handles conflicting values, and stores the final product information in a MySQL database.
 
-The project also includes a dashboard to monitor pipeline runs, view published products, and check rejected records.
+The project also includes a web dashboard to monitor pipeline runs, view published products, and check rejected records.
 
 ## Project Architecture
 
-The project is organized into the following parts:
+The project is divided into the following components:
 
-- **Frontend:** A simple dashboard built with HTML, CSS, and JavaScript.
-- **Backend:** Python and FastAPI handle the APIs and data pipeline.
-- **Database:** MySQL stores products, supplier information, pipeline history, rejected records, and attribute provenance.
-- **Data:** Contains sample product feeds from three suppliers.
+- **Frontend:** A dashboard built using HTML, CSS, and JavaScript.
+- **Backend:** Python and FastAPI handle the data pipeline and API requests.
+- **Database:** MySQL stores product information, supplier records, pipeline history, rejected records, and attribute provenance.
+- **Data:** Contains product feeds from three different suppliers.
 - **Scripts:** Generates synthetic supplier data for testing.
 - **Tests:** Contains automated tests for the main pipeline components.
-- **Docs:** Stores project documentation and design notes.
+- **Docs:** Includes architecture, data dictionary, and design documentation.
 
 ## Technologies Used
 
 - Python
 - FastAPI
 - MySQL
-- HTML, CSS, JavaScript
-- Pandas
+- HTML, CSS, and JavaScript
 - Pytest
 
 ## How the Pipeline Works
 
-The pipeline follows these steps:
+The pipeline processes supplier data through the following steps:
 
 1. Reads product feeds from three suppliers in CSV and JSON formats.
-2. Maps different supplier fields into a common product structure.
+2. Maps supplier-specific fields into a common product structure.
 3. Validates records and identifies missing or invalid information.
-4. Keeps invalid records separately with their rejection reasons.
+4. Stores invalid records separately along with their rejection reasons.
 5. Standardizes product attributes such as names, brands, categories, and GTINs.
 6. Identifies matching products and resolves conflicting values using supplier priority.
-7. Publishes the final product information into MySQL.
-8. Tracks which supplier provided each product attribute.
-9. Stores pipeline execution details and processing metrics.
+7. Saves the final product information in MySQL.
+8. Tracks the supplier responsible for each product attribute.
+9. Records pipeline execution details and processing metrics.
 
 ## Running the Project
 
-### 1. Set up the environment
+### 1. Set Up the Environment
 
-Open PowerShell in the project directory.
+Open PowerShell in the project directory and run:
 
 ```powershell
 python -m venv venv
@@ -57,7 +56,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-### 2. Configure the database
+### 2. Configure the Database
 
 Make sure MySQL Server is running and create the project database:
 
@@ -65,21 +64,25 @@ Make sure MySQL Server is running and create the project database:
 CREATE DATABASE multi_supplier_db;
 ```
 
-Configure your local database credentials in the `.env` file using `.env.example` as a reference.
+Create a `.env` file using `.env.example` as a reference and add your local database credentials.
 
-Do not upload your actual `.env` file or database password when sharing the project.
+Do not upload your actual `.env` file or database password to GitHub.
 
-### 3. Start the application
+### 3. Start the Application
+
+Run the following command:
 
 ```powershell
 uvicorn backend.main:app --reload
 ```
 
-### 4. Open the application
+### 4. Open the Application
 
-- Dashboard: http://127.0.0.1:8000/dashboard
-- API documentation: http://127.0.0.1:8000/docs
-- Health check: http://127.0.0.1:8000/health
+Once the server is running, open these URLs in your browser:
+
+- **Dashboard:** http://127.0.0.1:8000/dashboard
+- **API Documentation:** http://127.0.0.1:8000/docs
+- **Health Check:** http://127.0.0.1:8000/health
 
 The dashboard displays product counts, supplier records, attribute provenance, pipeline execution history, and rejected records.
 
@@ -91,21 +94,21 @@ To generate 100,000 records for each supplier, run:
 python scripts/generate_data.py --rows 100000
 ```
 
-The generated dataset contains 300,000 records across the three suppliers.
+This generates a total of 300,000 records across the three suppliers.
 
 ## Running Automated Tests
 
-Run the test suite using:
+Run the tests using:
 
 ```powershell
-pytest -q
+python -m pytest -q
 ```
 
-The current test suite contains 10 tests covering validation, data transformation, supplier mapping, conflict resolution, and provenance.
+The current test suite contains 10 tests covering validation, data transformation, supplier mapping, conflict resolution, and attribute provenance.
 
-## Current Performance Results
+## Performance Results
 
-The pipeline was tested with 300,000 input records.
+The pipeline was tested using 300,000 input records.
 
 | Metric | Result |
 |---|---:|
@@ -116,32 +119,31 @@ The pipeline was tested with 300,000 input records.
 | Published products | 100,000 |
 | Automated tests passed | 10 |
 
-The latest successful large-data execution completed in approximately 92 seconds on the development machine.
-
-These results are from the generated test dataset and may vary depending on the system.
+The latest successful execution with 300,000 records took approximately 92 seconds on the development machine. Actual execution time may vary depending on the system.
 
 ## Database Tables
 
 The project uses six main MySQL tables:
 
-- `suppliers` – stores supplier information.
-- `pipeline_runs` – stores pipeline execution details.
-- `products` – stores standardized product information.
-- `product_sources` – links products to their supplier records.
-- `attribute_provenance` – tracks the source of individual product attributes.
-- `rejected_records` – stores invalid records and their rejection reasons.
+- `suppliers` - Stores supplier information and priorities.
+- `pipeline_runs` - Stores pipeline execution details and metrics.
+- `products` - Stores standardized product information.
+- `product_sources` - Links published products to their original supplier records.
+- `attribute_provenance` - Tracks the source of individual product attributes.
+- `rejected_records` - Stores invalid records and their rejection reasons.
 
 ## Future Improvements
 
-Some areas that can be improved further include:
+Some areas that could be improved further include:
 
-- Adding pagination and search to the dashboard.
-- Improving pipeline processing speed for larger datasets.
-- Adding more validation rules for supplier-specific data.
+- Adding pagination and search options to the dashboard.
+- Improving processing speed for larger datasets.
+- Adding more supplier-specific validation rules.
 - Supporting additional supplier feed formats.
-- Improving automated tests for failure and retry scenarios.
+- Expanding automated tests for failure and retry scenarios.
 
 ---
 
-**Project:** Multi-Supplier Product Data Integration Pipeline  
-**Purpose:** Standardize, validate, combine, and publish product data from multiple suppliers.
+**Project:** Multi-Supplier Product Data Integration Pipeline
+
+**Purpose:** To validate, standardize, combine, and publish product data from multiple suppliers.
